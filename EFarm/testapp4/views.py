@@ -289,69 +289,29 @@ class Cart(View):
         return render(request,'testapp/cart.html',{'products' : products})
 
 
-def checkout(request):
-    if request.method == 'POST':
-        # Retrieve form data
-        customer_data = {
-            'first_name': request.POST['first_name'],
-            'middle_name': request.POST['middle_name'],
-            'last_name': request.POST['last_name'],
-            'age': request.POST['age'],
-            'mobile_no': request.POST['mobile_no'],
-            'dob': request.POST['dob'],
-            'email': request.POST['email'],
-            'password': request.POST['password']
-        }
-
-        # Create Customer instance
-        customer = Customer(**customer_data)
-
-        # Save the customer to the database
-        customer.save()
-
-        # Now, create the order with the saved customer
-        order = Orders(
-            product_id=request.POST['product_id'],
-            customer=customer,
-            quantity=request.POST['quantity'],
-            price=request.POST['price'],
-            address=request.POST.get('address', ''),
-            phone=request.POST.get('phone', '')
-        )
-
-        # Save the order to the database
-        order.save()
-
-        return redirect('order_success')  # Redirect to success page after placing order
-
-    return render(request, 'checkout.html')
 
 
 
-
-
-
-
-# class Checkout(View):
-#     def post(self, request):
-#         address = request.POST.get('address')
-#         phoneno = request.POST.get('phone')
-#         customer = request.session.get('customer_id')
-#         cart = request.session.get('cart')
-#         products = Product.get_products_by_id(list(cart.keys()))
-#         print(address,phoneno,customer,cart,products)
+class Checkout(View):
+    def post(self, request):
+        address = request.POST.get('address')
+        phoneno = request.POST.get('phone')
+        customer = request.session.get('customer_id')
+        cart = request.session.get('cart')
+        products = Product.get_products_by_id(list(cart.keys()))
+        print(address,phoneno,customer,cart,products)
         
-#         for product in products:
-#             order = Orders(customer = Customer(id = customer),
-#                          product = product,
-#                          quantity = cart.get(str(product.id)),
-#                          price = product.discounted_price,
-#                          address = address,
-#                          phone = phoneno)
-#             print(order.placeOrder());
-#             order.save()
-#         request.session['cart'] = {}
-#         return redirect('cart')
+        for product in products:
+            order = Orders(customer = Customer(id = customer),
+                         product = product,
+                         quantity = cart.get(str(product.id)),
+                         price = product.discounted_price,
+                         address = address,
+                         phone = phoneno)
+            print(order.placeOrder());
+            order.save()
+        request.session['cart'] = {}
+        return redirect('cart')
 
 
 class OrderView(View):
