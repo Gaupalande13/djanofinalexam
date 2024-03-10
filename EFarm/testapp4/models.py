@@ -33,7 +33,7 @@ class Product(models.Model):
     #pro_id = models.AutoField
     pro_name=models.CharField(max_length=25)
     selling_price = models.IntegerField()
-    discounted_price = models.IntegerField()
+    discounted_price = models.CharField(max_length=10)
     category = models.ForeignKey(Category, on_delete=models.CASCADE,default=1)
     desc = models.CharField(max_length=200)
     product_image = models.ImageField(upload_to='uploads/to')
