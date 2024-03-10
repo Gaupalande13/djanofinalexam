@@ -1,0 +1,418 @@
+{% load cart_tags static %}
+{% load custom_filter %}
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+    <link rel="stylesheet" href="{% static 'css/index.css'%}">
+    <link rel="stylesheet" href="{% static 'css/category.css' %}'">
+
+    <!-- custom css file link  -->
+    <!--<link rel="stylesheet" href="{% static 'css/payment.css'%}">-->
+    
+    <style>
+        
+        .header-2 {
+            display: flex;
+            align-items: center;
+        }
+
+        .navbar {
+            display: flex;
+            align-items: center;
+        }
+
+        .navbar a {
+            margin-right: 20px;
+        }
+
+        .list-group {
+            margin-right: auto;
+        }
+
+        .dropdown-menu {
+            display: none;
+            position: absolute;
+            background-color: #f9f9f9;
+            width: 180px;
+            box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
+            z-index: 1;
+        }
+
+        .dropdown:hover .dropdown-menu {
+            display: block;
+        }
+    
+
+
+.info{
+    color: rgb(248, 3, 3);
+}
+          
+
+/* Dropdown container */
+.dropdown {
+    position: relative;
+    display: inline-block;
+}
+
+/* Dropdown content (hidden by default) */
+.dropdown-content {
+    display: none;
+    position: absolute;
+    background-color: #f9f9f9;
+    min-width: 10px;
+    box-shadow: 0 8px 10px 0 rgba(0,0,0,0.2);
+    z-index: 1;
+    font-size: 5px;
+}
+
+/* Links inside the dropdown */
+.dropdown-content a {
+    color: black;
+    padding: 9px 12px;
+    text-decoration: none;
+    display: block;
+}
+
+/* Change color of dropdown links on hover */
+.dropdown-content a:hover {
+    background-color:green;
+}
+
+/* Show the dropdown menu on hover */
+.dropdown:hover .dropdown-content {
+    display: block;
+}
+
+/* Responsive design */
+@media screen and (max-width: 300px) {
+    .dropdown {
+        display: block;
+        text-align: center;
+    }
+    .dropdown-content {
+        display: none;
+        position: relative;
+        width: 100%;
+        text-align: center;
+    }
+    .dropdown:hover .dropdown-content {
+        display: block;
+    }
+}
+
+/*//////////////////////////////////////////////*/
+.container-fluid {
+    height: 50%; /* Optional: Adjust the height as needed */
+    display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+}
+
+.row{
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+
+.box {
+    background-color: #fff;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    height: 95%;
+    padding: 20px;
+    text-align: center;
+    position: relative; /* For absolute positioning of discount */
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    margin: 10px;
+}
+
+.discount {
+    background-color: #ff5555;
+    color: #fff;
+    padding: 5px 10px;
+    border-radius: 3px;
+    position: absolute;
+    top: 10px;
+    left: 10px;
+}
+
+
+
+.price {
+    font-size: 18px;
+    margin-top: 10px;
+
+}
+.original-price {
+    text-decoration: line-through;
+}
+
+/* <!-- 
+.price span {
+    color: #999;
+    margin-left: 5px;
+} --> */
+
+.quantity {
+    margin-top: 10px;
+}
+
+.btn {
+    display: inline-block;
+    background-color: #4CAF50;
+    color: #fff;
+    padding: 10px 20px;
+    text-align: center;
+    text-decoration: none;
+    font-size: 16px;
+    border-radius: 5px;
+    transition: background-color 0.3s;
+}
+
+.btn:hover {
+    background-color: #45a049;
+}
+
+.footer {
+    background-color: transparent; /* Remove the background color */
+    height: 5px;
+    display: flex;
+    justify-content: centre;
+    align-items: center;
+}
+
+.row[type="submit"] {
+    width: 30px; /* Adjust the width as needed */
+    height: 30px; /* Adjust the height as needed */
+    padding: 5px; /* Add padding as needed */
+    margin: 4px; /* Add margin as needed */
+    font-size: 15px; /* Adjust font size as needed */
+}
+
+
+
+
+.product-wrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.product-wrapper .footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 50%;
+}
+
+.product-wrapper .footer .btn {
+
+    width: 40px; /* Increase the width */
+    height: 40px; /* Increase the height */
+    font-size: 20px; /* Increase the font size */
+    padding: 10px 20px; /* Adjust padding */
+    display: flex; /* Use flexbox */
+    justify-content: center; /* Center horizontally */
+    align-items: center; /* Center vertically */
+}
+
+
+.product-wrapper .text-centre {
+    flex-grow: 1;
+    
+}
+
+.product-wrapper .add-to-cart-btn {
+    margin-top: 10px; /* Adjust margin as needed */
+}
+
+
+
+
+
+/* Responsive styles */
+@media (max-width: 500px) {
+    .col-lg-3 {
+        flex: 0 0 50%;
+    }
+}
+
+@media (max-width: 550px) {
+    .col-lg-3 {
+        flex: 0 0 50%;
+    }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        </style>
+    </head>
+
+    <body>
+     
+
+      <header>
+          <div class="header-1">
+              <a href="#" class="logo"><i class="fas fa-shopping-basket"></i>EFARM</a>
+
+              <form action="/search/" method="GET" search-box-container">
+                  <input type="search" id="search-box" placeholder="search-here...." name="search-box">
+                <label for="search-box" class="fas fa-search"></label>
+              </form>
+          </div>
+          
+          
+
+          <div class="header-2">
+              <div id="menu-bar" class="fas fa-bars"></div>
+
+
+              <nav class="navbar">
+                  <a href="#home" >home</a>
+                <div class="list-group">
+                        <div class="dropdown">
+                          <a href="#" class="dropdown-toggle" id="categoryDropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Category</a>
+                          <div class="dropdown-menu" aria-labelledby="categoryDropdown">
+                            {% for category in categories %}
+                              <a class="dropdown-item" href="{% url 'category' %}?selected_category={{ category.id }}{{category.name}}">{{category.id}} {{ category.name }}</a>
+                            {% endfor %}
+                          </div>
+                        </div>
+                      </div>
+                  <a href="#deal">deal</a>
+                  <a href="{%url 'contact' %}">contact</a>
+              </nav>
+
+              <div class="icons">
+                  <a href="{%url 'cart' %}" class="fas fa-shopping-cart"> 
+                      <span class="info">{{request.session.cart.keys|length}}</span>
+                  </a>
+                  <a href="#" class="fas fa-heart"></a>
+                  <div class="dropdown">
+                  <a href="#" class="fas fa-user-circle"></a>
+                  
+                  <div class="dropdown-content">
+                        {% if request.session.customer_id %}
+                        <a href="#">orders</a>
+                        <a href="{% url 'logout' %}">logout</a>
+                        {% else %}
+                        <a href="{%url 'login' %}">login</a>
+                        <a href="{%url 'signup' %}">register</a>
+                        <a href="#">forgetpass</a>
+                       
+                      
+                     {% endif %}
+
+                    </div>
+                </div>
+              </div>
+        
+      </header>
+     
+      
+<div class="container-fluid">
+    <div class="row">
+      {% for product in products %}
+      <div class="col-lg-4" >
+        <div class="box" id="{{product.id}}">
+          <span class="discount">-15%</span>
+          <img src="{{product.product_image.url}}" width="50%" >
+          <h3>{{ product.pro_name }}</h3>
+          <div class="price"><span class="original-price">{{ product.selling_price|currency }}</span> of <span>  {{ product.discounted_price|currency }} </span> <span>/kg</span></div>
+          <div class="quantity">
+            <span>{{ product.desc }}</span>
+            
+           <!-- <div> {{product | is_in_cart:cart }}</div> -->
+
+
+           
+            <div class="product-wrapper">
+                    {% if product|is_in_cart:request.session.cart %}
+                
+    <div class="footer row no-gutters" >
+            <form action="" class="col-2" method="POST" >
+                    {% csrf_token %}
+                <input hidden type="text" name="product" value="{{product.id}}">
+                <input hidden type="text" name="remove" value="True">
+            <input type="submit" value="-" class=" btn btn-block btn-light">
+
+            </form>            
+            <div class="text-centre col">{{product|cart_quantity:request.session.cart}} in Cart</div>
+            <form action="#{{product.id}}" class="col-2" method="POST" >
+                    {% csrf_token %}
+                <input hidden type="text" name="product" value="{{product.id}}">
+            <input type="submit" value="+" class=" btn btn-block btn-light">
+
+            </form>
+        </div>
+
+
+         {% else %}
+            <form action="#{{product.id}}" method="POST" class="btn-block">
+                        {% csrf_token %}
+                        <input hidden type="text" name="product" value="{{product.id}}">
+                        <input type="submit" class="btn form-control" value="add to cart">
+                    </form>
+        {% endif %}
+
+
+
+
+    
+</div>
+</div>
+        </div>
+      </div>
+      {% if forloop.counter|divisibleby:3 and not forloop.last %}
+    </div>
+    <div class="row">
+      {% endif %}
+      {% endfor %}
+    </div>
+  </div>
+   </div>
+
+    </body>
+    </html>

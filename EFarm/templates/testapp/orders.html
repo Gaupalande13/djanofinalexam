@@ -1,0 +1,442 @@
+{% load cart_tags static %} 
+{% load custom_filter %}
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+    <link rel="stylesheet" href="{% static 'css/index.css'%}">
+    <link rel="stylesheet" href="{% static 'css/category.css' %}'">
+
+    <!-- custom css file link  -->
+    <!--<link rel="stylesheet" href="{% static 'css/payment.css'%}">-->
+    
+    <style>
+        
+        .header-2 {
+            display: flex;
+            align-items: center;
+        }
+
+        .navbar {
+            display: flex;
+            align-items: center;
+        }
+
+        .navbar a {
+            margin-right: 20px;
+        }
+
+        .list-group {
+            margin-right: auto;
+        }
+
+        .dropdown-menu {
+            display: none;
+            position: absolute;
+            background-color: #f9f9f9;
+            width: 180px;
+            box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
+            z-index: 1;
+        }
+
+        .dropdown:hover .dropdown-menu {
+            display: block;
+        }
+    
+
+        /* CSS for responsive design */
+.container {
+    max-width: 100%;
+    padding-right: 15px;
+    padding-left: 15px;
+    margin-right: auto;
+    margin-left: auto;
+}
+.container p {
+    font-size: 25px;
+    color:green; 
+    font-weight: bold; 
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.4);
+}
+
+
+/* Dropdown container */
+.dropdown {
+    position: relative;
+    display: inline-block;
+}
+
+/* Dropdown content (hidden by default) */
+.dropdown-content {
+    display: none;
+    position: absolute;
+    background-color: #f9f9f9;
+    min-width: 10px;
+    box-shadow: 0 8px 10px 0 rgba(0,0,0,0.2);
+    z-index: 1;
+    font-size: 5px;
+}
+
+/* Links inside the dropdown */
+.dropdown-content a {
+    color: black;
+    padding: 9px 12px;
+    text-decoration: none;
+    display: block;
+}
+
+/* Change color of dropdown links on hover */
+.dropdown-content a:hover {
+    background-color:green;
+}
+
+/* Show the dropdown menu on hover */
+.dropdown:hover .dropdown-content {
+    display: block;
+}
+
+/* Responsive design */
+@media screen and (max-width: 300px) {
+    .dropdown {
+        display: block;
+        text-align: center;
+    }
+    .dropdown-content {
+        display: none;
+        position: relative;
+        width: 100%;
+        text-align: center;
+    }
+    .dropdown:hover .dropdown-content {
+        display: block;
+    }
+}
+
+
+
+
+/* Responsive table */
+.table {
+    width: 100%;
+    margin-bottom: 1rem;
+    color: #212529;
+}
+
+.table th,
+.table td {
+    padding: 0.75rem;
+    vertical-align: top;
+    border-top: 1px solid #dee2e6;
+}
+
+@media screen and (max-width: 767px) {
+    .table-responsive {
+        display: block;
+        width: 100%;
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+        -ms-overflow-style: -ms-autohiding-scrollbar;
+    }
+    .table-responsive > .table {
+        margin-bottom: 0;
+        background-color: transparent;
+    }
+    .table-responsive > .table > thead > tr > th,
+    .table-responsive > .table > tbody > tr > th,
+    .table-responsive > .table > tfoot > tr > th,
+    .table-responsive > .table > thead > tr > td,
+    .table-responsive > .table > tbody > tr > td,
+    .table-responsive > .table > tfoot > tr > td {
+        white-space: nowrap;
+    }
+    .table-responsive > .table-bordered {
+        border: 0;
+    }
+    .table-responsive > .table-bordered > thead > tr > th:first-child,
+    .table-responsive > .table-bordered > tbody > tr > th:first-child,
+    .table-responsive > .table-bordered > tfoot > tr > th:first-child,
+    .table-responsive > .table-bordered > thead > tr > td:first-child,
+    .table-responsive > .table-bordered > tbody > tr > td:first-child,
+    .table-responsive > .table-bordered > tfoot > tr > td:first-child {
+        border-left: 0;
+    }
+    .table-responsive > .table-bordered > thead > tr > th:last-child,
+    .table-responsive > .table-bordered > tbody > tr > th:last-child,
+    .table-responsive > .table-bordered > tfoot > tr > th:last-child,
+    .table-responsive > .table-bordered > thead > tr > td:last-child,
+    .table-responsive > .table-bordered > tbody > tr > td:last-child,
+    .table-responsive > .table-bordered > tfoot > tr > td:last-child {
+        border-right: 0;
+    }
+    .table-responsive > .table-bordered > tbody > tr:last-child > th,
+    .table-responsive > .table-bordered > tfoot > tr:last-child > th,
+    .table-responsive > .table-bordered > tbody > tr:last-child > td,
+    .table-responsive > .table-bordered > tfoot > tr:last-child > td {
+        border-bottom: 0;
+    }
+}
+
+
+.payment {
+    display: inline-block;
+    padding: 10px 20px;
+    font-size: 16px;
+    text-align: center;
+    text-decoration: none;
+    color: white;
+    background-color: #4CAF50;
+    border: none;
+    border-radius: 5px;
+    transition: background-color 0.3s;
+  }
+
+  .payment:hover {
+    background-color: #45a049;
+  }
+
+  @media screen and (max-width: 600px) {
+    .payment {
+      font-size: 14px;
+      padding: 8px 16px;
+    }
+  }
+
+
+/* .payment {
+    background-color: green;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+    font-weight: bold;
+    text-transform: uppercase;
+} */
+
+/* .submit-btn:hover {
+    background-color: darkgreen;
+} */
+
+    
+
+
+
+          
+
+
+
+
+
+
+
+
+
+
+/* Custom CSS for the table */
+
+.table {
+    width: 100%;
+    margin-bottom: 1rem;
+    border-collapse: collapse;
+}
+
+.table th,
+.table td {
+    padding: 1rem;
+    text-align: left;
+    vertical-align: top;
+    border-bottom: 1px solid #dee2e6;
+}
+
+.table th {
+    font-weight: bold;
+    text-transform: uppercase;
+    font-size: 1.5rem;
+}
+.table img {
+    margin: 0 auto; /* Centers the image horizontally */
+    border-radius: 3px; /* Adds rounded corners to the image */
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.2); /* Adds a subtle shadow effect */
+}
+
+.table tbody tr:nth-child(even) {
+    background-color: #f2f2f2;
+}
+
+.table tbody tr:hover {
+    background-color: #e0e0e0;
+    font-size: 1.5rem;
+}
+
+tfoot {
+    background-color: #f8f9fa; /* Light gray background */
+}
+tfoot th[colspan="4"] {
+    text-align: center;
+}
+
+tfoot th {
+    padding: 10px; /* Padding for each table header cell */
+    text-align: center; /* Center-align text */
+}
+
+/* Completed badge */
+.completed-badge {
+    background-color: #28a745; /* Green background */
+    color: #fff; /* White text */
+    padding: 5px 10px; /* Padding */
+    border-radius: 5px; /* Rounded corners */
+    font-size: 14px; /* Font size */
+    font-weight: bold; /* Bold text */
+    text-transform: uppercase; /* Uppercase text */
+    font-family: Arial, sans-serif; /* Font family */
+}
+
+/* Pending badge */
+.pending-badge {
+    background-color: #f31515; /* Yellow background */
+    color: #000; /* Black text */
+    padding: 5px 10px; /* Padding */
+    border-radius: 5px; /* Rounded corners */
+    font-size: 14px; /* Font size */
+    font-weight: bold; /* Bold text */
+    text-transform: uppercase; /* Uppercase text */
+    font-family: Arial, sans-serif; /* Font family */
+}
+
+
+
+
+/* Responsive design */
+@media screen and (max-width: 767px) {
+    .table {
+        overflow-x: auto;
+    }
+}
+@media screen and (max-width: 767px) {
+    tfoot th {
+        font-size: 14px; /* Reduce font size for smaller screens */
+    }
+}
+@media screen and (max-width: 767px) {
+    .btn {
+        justify-content: space-between; /* Keep aligning items to the right on smaller screens */
+    }
+    .btn a.btn {
+        padding: 8px 16px; /* Adjusted padding for smaller screens */
+        font-size: 14px; /* Adjusted font size for smaller screens */
+    }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        </style>
+    </head>
+
+    <body>
+     
+
+            <header>
+                    <div class="header-1">
+                        <a href="#" class="logo"><i class="fas fa-shopping-basket"></i>EFARM</a>
+                    </div>
+                
+                    <div class="header-2">
+                        <div id="menu-bar" class="fas fa-bars"></div>
+                        <nav class="navbar">
+                            <a href="#home">home</a>
+                            <a href="{% url 'category' %}">Category</a>
+                            <a href="{% url 'contact' %}">contact</a>
+                        </nav>
+                        <div class="icons">
+                            <div class="dropdown">
+                                <a href="#" class="fas fa-user-circle"></a>
+                                <div class="dropdown-content">
+                                    {% if request.session.customer_id %}
+                                        <a href="{% url 'logout' %}">logout</a>
+                                    {% else %}
+                                        <a href="{% url 'login' %}">login</a>
+                                        <a href="{% url 'signup' %}">register</a>
+                                        <a href="#">forgetpass</a>
+                                        <a href="#">Orders</a>
+                                    {% endif %}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </header>
+                
+                <div class="container">
+                    <div class="border rounded p-4 m-4">
+                        <p>Orders</p>
+                        <hr>
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th>Product No.</th>
+                                    <th>Image</th>
+                                    <th>Product</th>
+                                    <th>Date</th>
+                                    <th>Price</th>
+                                    <th>Quantity</th>
+                                    <th>Total</th>
+                                    <th>Status</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for order in orders %}
+                                    <tr>
+                                        <td>{{ forloop.counter }}</td>
+                                        <td><img src="{{ order.product.product_image.url }}" width="70px" height="40px"></td>
+                                        <td>{{order.product.pro_name }}</td>
+                                        <td>{{order.date|date:"F j, Y, g:i a" }}</td>
+                                        <td>{{order.product.discounted_price|currency }}</td>
+                                        <td>{{order.quantity }}</td>
+                                        <td>{{order.quantity|multiply:order.product.discounted_price|currency }}</td>
+                                        {% if order.status %}
+                                        <td><small class="badge badge-success completed-badge">Completed</small></td>
+                                        {% else %}
+                                        <td><small class="badge badge-warning pending-badge">Pending</small></td>
+                                        {% endif %}
+                                    </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <div>
+                    <a href="{%url 'payment'%}" class="payment">Proceed to Payment</a>
+                </div>
+                
+                </body>
+                </html>
