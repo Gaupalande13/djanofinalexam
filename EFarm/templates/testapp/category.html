@@ -357,7 +357,7 @@
       {% for product in products %}
       <div class="col-lg-4" >
         <div class="box" id="{{product.id}}">
-          <span class="discount">-15%</span>
+          <!-- <span class="discount">-15%</span> -->
           <img src="{{product.product_image.url}}" width="50%" >
           <h3>{{ product.pro_name }}</h3>
           <div class="price"><span class="original-price">{{ product.selling_price|currency }}</span> of <span>  {{ product.discounted_price|currency }} </span> <span>/kg</span></div>
