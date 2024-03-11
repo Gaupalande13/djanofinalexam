@@ -244,7 +244,7 @@ def signup(request):
             return render(request, 'testapp/signup.html', {'error_message': 'Failed to save customer. Please try again.'},data)
         
         # If everything goes well, redirect to success page
-        return redirect('index')  # Corrected redirect usage
+        return redirect('login')  # Corrected redirect usage
 
 
 
